@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nepali Patro Widget</title>
+  <style>
+    body {
+      margin: 0;
+      background: transparent;
+      overflow: hidden;
+      -webkit-app-region: drag;
+    }
+
+    #np_widget_wiz1 {
+      width: 300px;
+      margin: 10px;
+      cursor: pointer;
+      -webkit-app-region: no-drag;
+    }
+  </style>
+</head>
+<body>
+  <div id="np_widget_wiz1" widget="day-sm"></div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const widgetDiv = document.getElementById('np_widget_wiz1');
+      let isDayView = true;
+
+      function loadWidget() {
+        const oldScript = document.getElementById('wiz1');
+        if (oldScript) oldScript.remove();
+
+        const script = document.createElement('script');
+        script.src = 'https://nepalipatro.com.np/np-widgets/nepalipatro.js';
+        script.id = 'wiz1';
+        document.body.appendChild(script);
+      }
+
+      widgetDiv.addEventListener('dblclick', () => {
+        isDayView = !isDayView;
+        widgetDiv.setAttribute('widget', isDayView ? 'day-sm' : 'month-sm');
+        widgetDiv.innerHTML = '';
+        loadWidget();
+
+        window.electronAPI.toggleExpand();
+      });
+
+      loadWidget();
+    });
+  </script>
+</body>
+</html>
